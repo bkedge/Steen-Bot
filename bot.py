@@ -1,11 +1,18 @@
 import discord
 from discord.ext import commands
+import giphypop
+from giphypop import translate
 from config import TOKEN
+
 
 
 description = 'Bot that gets gifs on command'
 
 bot = commands.Bot(command_prefix = '$', description = description)
+
+g = giphypop.Giphy()
+
+
 
 @bot.event
 async def on_ready():
@@ -22,6 +29,8 @@ async def hello():
 @bot.command()
 async def gif(*, message: str):
     """ Fetches gif """
-    await bot.say(message)
+    img = translate(message)
+    url = img.url
+    await bot.say(url)
     
 bot.run(TOKEN)
